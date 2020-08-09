@@ -26,7 +26,7 @@ def draw_button(inactive, active, text, x_pos, y_pos):
 
     textRect = inactive.get_rect(center=(x_pos+inactive.get_width()/1.4, y_pos+inactive.get_height()/1.4))
 
-    if mouse_x > x_pos and mouse_x < x_pos+300 and mouse_y > y_pos and mouse_y < y_pos+150:
+    if mouse_x > x_pos and mouse_x < x_pos+150 and mouse_y > y_pos and mouse_y < y_pos+150:
         draw_image(active, x_pos, y_pos)
         draw_text(text=text, fontname="comicsansms", fontsize=40, textRect=textRect)
         if pygame.mouse.get_pressed()[0] == 1:
@@ -45,6 +45,8 @@ def game_intro():
     redButtonImgObj = get_image_obj("images/red_button.png", 150, 150)
     greenButtonImgObj = get_image_obj("images/green_button.png", 150, 150)
     activeButtonImgObj = get_image_obj("images/active_button.png", 150, 150)
+    pygame.mixer.music.load("sounds/intro.ogg")
+    pygame.mixer.music.play(-1)
 
     while True:
         for event in pygame.event.get():
@@ -83,6 +85,9 @@ def game_loop():
 
     carImgObj = get_image_obj("images/car_png.png", car_width, car_height)
     obsImgObj = get_image_obj("images/obs_png.png", obs_width, obs_height)
+    carCrashSound = pygame.mixer.Sound("sounds/crash.wav")
+    pygame.mixer.music.load("sounds/race.ogg")
+    pygame.mixer.music.play(-1)
 
     while True:
         for event in pygame.event.get():
@@ -97,8 +102,10 @@ def game_loop():
                 if event.key == pygame.K_p:
                     if pause_game:
                         pause_game = False
+                        pygame.mixer.music.unpause()
                     else:
                         pause_game = True
+                        pygame.mixer.music.pause()
 
         if pause_game and obs_speed != 0:
             pause_x_carpos_change = x_carpos_change
@@ -128,6 +135,8 @@ def game_loop():
                      or (x_carpos + car_width - 25 > x_obspos and x_carpos + car_width - 25 < x_obspos + obs_width)
                     )
                 ):
+            pygame.mixer.music.stop()
+            pygame.mixer.Sound.play(carCrashSound)
             draw_text(text="Crashed!!", fontname="comicsansms", fontsize=200, color=(200, 0, 0), center=True)
             pygame.display.update()
             time.sleep(2)
