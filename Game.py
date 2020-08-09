@@ -51,9 +51,9 @@ def game_loop():
     x_obspos = random.randrange(175, displayWidth - obs_width - 325)
     y_obspos = -600
 
-    carImage = pygame.image.load("C:\\Users\\Admin\\Desktop\\car_png.png")
+    carImage = pygame.image.load("images/car_png.png")
     carImage = pygame.transform.scale(carImage, (car_width, car_height))
-    obsImage = pygame.image.load("C:\\Users\\Admin\\Desktop\\obs_png.png")
+    obsImage = pygame.image.load("images/obs_png.png")
     obsImage = pygame.transform.scale(obsImage, (obs_width, obs_height))
 
     while True:
