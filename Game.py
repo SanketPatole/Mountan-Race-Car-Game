@@ -54,7 +54,7 @@ def game_intro():
                 if event.key == pygame.K_ESCAPE:
                     stop_game = True
 
-        gameDisplay.fill((255, 255, 255))
+        gameDisplay.fill((200, 200, 200))
         draw_text(text="Mountain", fontname="comicsansms", fontsize=175, color=(200, 0, 0), center=True, yOffset=-200)
         draw_text(text="Race Car", fontname="comicsansms", fontsize=100, color=(0, 0, 200), center=True, yOffset=0)
         draw_image(obsImgObj, 200, displayHeight/2 - 112)
@@ -66,10 +66,14 @@ def game_intro():
             stop_game = True
         elif greenPressed:
             stop_game = game_loop()
+            if stop_game == False:
+                pygame.mixer.music.load("sounds/intro.ogg")
+                pygame.mixer.music.play(-1)
 
         pygame.display.update()
         if stop_game == True:
             return
+
 
 def game_loop():
     stop_game = False
@@ -80,7 +84,7 @@ def game_loop():
     car_speed, car_height, car_width = 10, 150, 150
     x_carpos, y_carpos, x_carpos_change = (displayWidth/2 - car_width/2), (displayHeight - 300), 0
 
-    obs_speed, obs_height, obs_width = 10, 200, 225
+    obs_speed, obs_height, obs_width = 10, 200, 250
     x_obspos, y_obspos = (random.randrange(175, displayWidth - obs_width - 325)), -600
 
     carImgObj = get_image_obj("images/car_png.png", car_width, car_height)
@@ -119,7 +123,7 @@ def game_loop():
         x_carpos = x_carpos + x_carpos_change
         y_obspos = y_obspos + obs_speed
 
-        gameDisplay.fill((255, 255, 255))
+        gameDisplay.fill((200, 200, 200))
         draw_image(obsImgObj, x_obspos, y_obspos)
         draw_image(carImgObj, x_carpos, y_carpos)
         draw_text(text="Score: "+str(score), fontname="comicsansms", fontsize=50, pos_x=195, pos_y=150, color=(0,0,0), center=False)
