@@ -32,7 +32,7 @@ def draw_button(inactive, active, text, x_pos, y_pos):
         if pygame.mouse.get_pressed()[0] == 1:
             return True
         else:
-            False
+            return False
     else:
         draw_image(inactive, x_pos, y_pos)
         draw_text(text=text, fontname="comicsansms", fontsize=40, textRect=textRect)
